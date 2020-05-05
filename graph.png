@@ -1,0 +1,22 @@
+// The Round Table
+digraph {
+	"dns server" [label="dns server"]
+	"doh-server" [label="doh-server (bind ip:port)"]
+	"doh-client" [label="doh-client"]
+	"dnscrypt-proxy" [label="dnscrypt-proxy"]
+	web [label="web-server(bind domain)"]
+	cloudflared [label=cloudflared]
+	localhost [label=localhost]
+	"dns protocol"
+	"dns server" -> "dnscrypt-proxy"
+	"dns protocol" -> "doh-server"
+	"dns server" -> "dns protocol" [color=orange]
+	"dnscrypt-proxy" -> "dns protocol" [color=orange]
+	"doh-server" -> "doh-client"
+	"doh-client" -> "dns protocol" [color=orange]
+	"dns protocol" -> localhost [color=green]
+	"doh-server" -> web
+	web -> cloudflared
+	web -> "doh-client" [color=pink]
+	cloudflared -> "dns protocol" [color=orange]
+}
